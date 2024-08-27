@@ -11,7 +11,8 @@ const UrlCard = ({ urlData }) => {
 
             <div className="flex w-full gap-3 justify-between">
                 <div className="flex-none rounded-full border border-gray-200 bg-white p-2 h-10 w-10">
-                    <img alt="logo" width="20" height="20" className="blur-0 rounded-full object-cover" src="https://www.google.com/s2/favicons?sz=64&domain_url=youtube.com" />
+                    {/* <img alt="logo" width="20" height="20" className="blur-0 rounded-full object-cover" src="https://www.google.com/s2/favicons?sz=64&domain_url=youtube.com" /> */}
+                    <img alt="59.137" draggable="false" loading="lazy" width="20" height="20" decoding="async" data-nimg="1" className="blur-0 rounded-full h-4 w-4 shrink-0 transition-[width,height] sm:h-6 sm:w-6 group-data-[variant=loose]/card-list:sm:h-5 group-data-[variant=loose]/card-list:sm:w-5" src="https://avatar.vercel.sh/59.137"></img>
                 </div>
                 <div className="w-full">
                     <div className="flex justify-between">
