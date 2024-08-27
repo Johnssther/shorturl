@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use DB, Log;
 
 class UrlController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'original_url' => 'required|url',
-        ]);
+        DB::beginTransaction();
+        try {
+            $shortenedUrl = Str::random(6);
+    
+            Url::create([
+                'original_url' => $request->originalUrl,
+                'shortened_url' => $shortenedUrl,
+            ]);
 
-        $shortenedUrl = Str::random(6);
+            DB::commit();
+            return redirect(route('welcome'));
 
-        Url::create([
-            'original_url' => $request->original_url,
-            'shortened_url' => $shortenedUrl,
-        ]);
-
-        return response()->json(['shortened_url' => url($shortenedUrl)], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Error store role {$e->getMessage()}");
+        }
     }
 
     public function redirect($shortenedUrl)

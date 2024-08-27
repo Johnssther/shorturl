@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Url;
 use Carbon\Carbon;
+use App\Http\Controllers\UrlController;
 
 Route::get('/', function () {
     $data = Url::get();
@@ -17,7 +18,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
         'urls' => $data,
     ]);
-});
+})->name('welcome');
+
+Route::post('/urls', [UrlController::class, 'store'])->name('urls.store');
+Route::get('/{shortenedUrl}', [UrlController::class, 'redirect']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
