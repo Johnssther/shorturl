@@ -9,8 +9,7 @@ import { useForm } from '@inertiajs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLink, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
-
-export default function Welcome({ auth, laravelVersion, phpVersion, urls }) {
+export default function Index({ auth, laravelVersion, phpVersion, urls }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         originalUrl: '',
     });

@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('original_url');
             $table->string('shortened_url')->unique();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
     }
 
