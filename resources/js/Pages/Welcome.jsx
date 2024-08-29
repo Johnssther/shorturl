@@ -15,9 +15,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion, urls }) {
         originalUrl: '',
     });
 
-    const submit = (e) => {
+    const submxit = (e) => {
         e.preventDefault();
-        post(route('urls.store'), {
+        post(route('links.store'), {
             onFinish: () => reset('originalUrl'),
         });
     };

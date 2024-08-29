@@ -8,6 +8,11 @@ use App\Models\Url;
 use Carbon\Carbon;
 use App\Http\Controllers\UrlController;
 
+Route::get('/i/{shortenedUrl}', [UrlController::class, 'redirect']);
+Route::get('/links', [UrlController::class, 'linksindex'])->name('links.index');
+Route::post('/links', [UrlController::class, 'linkstore'])->name('links.store');
+
+
 Route::get('/', function () {
     $currentDateTime = Carbon::now();
     $thirtyMinutesAgo = $currentDateTime->subMinutes(30);
@@ -25,9 +30,6 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/i/{shortenedUrl}', [UrlController::class, 'redirect']);
-Route::post('/urls', [UrlController::class, 'store'])->name('urls.store');
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -37,8 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/urls', [UrlController::class, 'index'])->name('urls.index');
-
+    Route::resource('urls', UrlController::class);
 });
 
 require __DIR__.'/auth.php';
