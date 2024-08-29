@@ -7,7 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm } from '@inertiajs/react';
 import Checkbox from '@/Components/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faClipboardList, faCheckCircle, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faClipboardList, faLink, faSave } from '@fortawesome/free-solid-svg-icons';
 
 export default function Create({ auth, url = null }) {
     const isEditing = Boolean(url);
@@ -20,11 +20,12 @@ export default function Create({ auth, url = null }) {
         e.preventDefault();
         if (isEditing) {
             put(route('urls.update', url.id), {
-                onFinish: () => reset('originalUrl', 'shortened_url'),
+                onFinish: () => reset('original_url', 'shortened_url'),
             });
         } else {
+            console.log('xx', route('urls.store'));
             post(route('urls.store'), {
-                onFinish: () => reset('originalUrl', 'shortened_url'),
+                onFinish: () => reset('original_url', 'shortened_url'),
             });
         }
     };
@@ -60,7 +61,7 @@ export default function Create({ auth, url = null }) {
                                 </div>
                                 <InputError message={errors.original_url} className="mt-2" />
                             </div>
-                            <div className="w-full">
+                            <div className="w-1/4">
                                 <div className="flex items-center gap-2">
                                     <InputLabel htmlFor="shortened_url" value="Shortened url" />
                                 </div>

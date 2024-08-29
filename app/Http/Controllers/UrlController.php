@@ -50,9 +50,8 @@ class UrlController extends Controller
             } else {
                 $userId = $request->user()->id;
             }
-            
             Url::create([
-                'original_url' => $request->originalUrl,
+                'original_url' => $request->original_url,
                 'shortened_url' => $shortenedUrl,
                 'user_id' => $userId,
             ]);
@@ -69,7 +68,10 @@ class UrlController extends Controller
     public function redirect(Request $request, $shortenedUrl)
     {
         $url = Url::where('shortened_url', $shortenedUrl)->firstOrFail();
-        return redirect($url->original_url);
+        if($url instanceof Url) {
+            return redirect($url->original_url);
+        }
+        abort(404);
     }
 
     /**

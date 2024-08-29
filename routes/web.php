@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Url;
 use Carbon\Carbon;
 use App\Http\Controllers\UrlController;
+use Illuminate\Http\Request;
 
 Route::get('/i/{shortenedUrl}', [UrlController::class, 'redirect']);
 Route::get('/links', [UrlController::class, 'linksindex'])->name('links.index');
@@ -30,8 +31,9 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $totalLinks = count(Url::where('user_id', $request->user()->id)->get());
+    return Inertia::render('Dashboard', compact('totalLinks'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
