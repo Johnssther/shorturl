@@ -23,7 +23,6 @@ export default function Create({ auth, url = null }) {
                 onFinish: () => reset('original_url', 'shortened_url'),
             });
         } else {
-            console.log('xx', route('urls.store'));
             post(route('urls.store'), {
                 onFinish: () => reset('original_url', 'shortened_url'),
             });
@@ -73,7 +72,6 @@ export default function Create({ auth, url = null }) {
                                         className="mt-1 block w-full pl-2"
                                         autoComplete="shortened_url"
                                         onChange={(e) => setData('shortened_url', e.target.value)}
-                                        required
                                     />
                                 </div>
                                 <InputError message={errors.shortened_url} className="mt-2" />

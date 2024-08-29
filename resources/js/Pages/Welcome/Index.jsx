@@ -11,13 +11,13 @@ import { faUser, faLink, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Index({ auth, laravelVersion, phpVersion, urls }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        originalUrl: '',
+        original_url: '',
     });
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('urls.store'), {
-            onFinish: () => reset('originalUrl'),
+        post(route('links.store'), {
+            onFinish: () => reset('original_url'),
         });
     };
 
@@ -57,10 +57,12 @@ export default function Index({ auth, laravelVersion, phpVersion, urls }) {
                 </div>
             </nav>
 
-            <main className="container mx-auto mt-10 text-center w-1/2">
-                <h3 className="text-6xl font-extrabold mb-6 text-yellow-500">Transforma Tus Enlaces <span className="text-slate-800">en Oportunidades</span></h3>
+            <div className="lg:w-2/3 text-center mx-auto mt-10">
+                <h1 className="text-gray-900 mb-6 dark:text-white font-extrabold text-5xl md:text-6xl xl:text-7xl">Transforma tus enlaces
+                    <span className="text-yellow-500 dark:text-white"> en oportunidades.</span>
+                </h1>
                 <p className="text-lg mb-6">ShortURL simplifica la gestión de enlaces, ideal para equipos de marketing que quieren maximizar el impacto de sus campañas. ¡Transforma tus enlaces hoy!</p>
-            </main>
+            </div>
 
             <div className="flex flex-col items-center justify-start min-h-screen bg-gray-50 p-6">
                 <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Acortador de URLs</h1>
@@ -72,13 +74,13 @@ export default function Index({ auth, laravelVersion, phpVersion, urls }) {
                             </div>
                             <div className="flex items-center rounded-md border-gray-300">
                                 <TextInput
-                                    id="originalUrl"
-                                    name="originalUrl"
-                                    value={data.originalUrl}
+                                    id="original_url"
+                                    name="original_url"
+                                    value={data.original_url}
                                     className="mt-1 block w-full pl-2"
-                                    autoComplete="originalUrl"
+                                    autoComplete="original_url"
                                     isFocused={true}
-                                    onChange={(e) => setData('originalUrl', e.target.value)}
+                                    onChange={(e) => setData('original_url', e.target.value)}
                                 />
                             </div>
                             <InputError message={errors.name} className="mt-2" />
@@ -87,7 +89,7 @@ export default function Index({ auth, laravelVersion, phpVersion, urls }) {
                         {/* <input
                             type="url"
                             placeholder="Ingrese la URL original"
-                            value={originalUrl}
+                            value={original_url}
                             onChange={(e) => setOriginalUrl(e.target.value)}
                             className="p-3 w-full mb-4 border text-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             required

@@ -36,6 +36,11 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'original_url' => 'required|string',
+            'shortened_url' => 'nullable|max:16',
+        ]);
+
         DB::beginTransaction();
         try {
             $shortenedUrl = Str::random(6);
@@ -105,13 +110,14 @@ class UrlController extends Controller
             }
             
             Url::create([
-                'original_url' => $request->originalUrl,
+                'original_url' => $request->original_url,
                 'shortened_url' => $shortenedUrl,
                 'user_id' => $userId,
             ]);
-
+            
             DB::commit();
             return redirect(route('welcome'));
+            dd('hhj');
 
         } catch (\Exception $e) {
             DB::rollBack();
