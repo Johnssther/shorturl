@@ -15,8 +15,23 @@ return new class extends Migration
             $table->id();
             $table->text('original_url');
             $table->string('shortened_url')->unique();
+            $table->text('comments')->nullable();
+            $table->string('password')->nullable();
+
+            $table->boolean('is_machine')->default(false);
+            $table->boolean('is_subscribed')->default(true);
+            $table->boolean('is_build_utm')->default(false);
+
+            $table->string('utm_id')->nullable();
+            $table->string('utm_source')->nullable();
+            $table->string('utm_medium')->nullable();
+            $table->string('utm_campaign')->nullable();
+            $table->string('utm_term')->nullable();
+            $table->string('utm_content')->nullable();
+            
             $table->unsignedBigInteger('user_id')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->datetime('fh_expired')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');

@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faGem } from '@fortawesome/free-solid-svg-icons';
 
 export default function Dashboard({ auth, totalLinks }) {
     return (
@@ -26,6 +26,11 @@ export default function Dashboard({ auth, totalLinks }) {
                                     </div>
                                 </div>
                             </div>
+
+                        <div className="cursor-pointer flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 p-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                            <FontAwesomeIcon icon={faGem} className="text-white text-3xl mr-3 drop-shadow-lg animate-pulse" />
+                            <span className="text-white font-bold text-xl">Premium Module</span>
+                        </div>
 
                         </div>
                     </div>

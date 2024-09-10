@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 Route::get('/i/{shortenedUrl}', [UrlController::class, 'redirect']);
 Route::get('/links', [UrlController::class, 'linksindex'])->name('links.index');
 Route::post('/links', [UrlController::class, 'linkstore'])->name('links.store');
+Route::post('/links/{id}/verify-password', [UrlController::class, 'verifyPassword'])->name('links.verify-password');
 
 
 Route::get('/', function () {
