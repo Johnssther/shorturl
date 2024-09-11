@@ -59,7 +59,7 @@ export default function ShowQR({ shortened_url, className = ''}) {
                     </h2>
 
                     <div className="mt-6 flex justify-center items-center">
-                        <QRCodeGenerator value={`http://localhost/shorturl/public/i/${shortened_url}`}/>
+                        <QRCodeGenerator value={`http://192.168.1.8/shorturl/public/i/${shortened_url}?r=qr`}/>
                     </div>
 
                     <div className="mt-6 flex justify-end">

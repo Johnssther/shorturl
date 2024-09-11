@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('utm_campaign')->nullable();
             $table->string('utm_term')->nullable();
             $table->string('utm_content')->nullable();
+
+            $table->unsignedInteger('clicks')->default(0);
+            $table->unsignedInteger('scans')->default(0);
             
             $table->unsignedBigInteger('user_id')->nullable();
             $table->boolean('is_active')->default(true);

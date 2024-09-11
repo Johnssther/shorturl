@@ -134,10 +134,28 @@ class UrlController extends Controller
         return redirect(route('urls.index'));
     }
 
+    public function clone($id)
+    {
+        $url = Url::findOrFail($id);
+        $clonedUrl = $url->replicate();
+        $clonedUrl->shortened_url = Str::random(6);
+        $clonedUrl->save();
+        return redirect()->route('urls.edit', $clonedUrl->id);
+    }
+
     public function redirect(Request $request, $shortenedUrl)
     {
         $url = Url::where('shortened_url', $shortenedUrl)->firstOrFail();
         $urlredirect = $url->buildUtmUrl($url->toArray());
+
+        if($request->filled('r')) {
+            if($request->r == 'qr') {
+                $url->scans = $url->scans + 1;
+            }
+        } else {
+            $url->clicks = $url->clicks + 1;
+        }
+        $url->save();
 
         $password = (bool) $url->password;
         if ($password) {

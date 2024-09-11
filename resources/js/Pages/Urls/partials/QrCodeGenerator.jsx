@@ -32,7 +32,7 @@ const QRCodeGenerator = ({ value }) => {
                 />
             </div>
             <div className="mt-4">
-                <PrimaryButton onClick={downloadQRCode} className='bg-white border-slate-800 text-black hover:bg-white'>
+                <PrimaryButton onClick={downloadQRCode} className='bg-slate-800 border-3 border-slate-800 border text-black hover:bg-slate-700'>
                     <FontAwesomeIcon icon={faDownload} className="mr-2" />
                     Download QR as PNG
                 </PrimaryButton>

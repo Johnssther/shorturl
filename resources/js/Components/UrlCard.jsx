@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePage } from '@inertiajs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faKey, faChartBar, faLink, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faKey, faSave, faLink, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@inertiajs/react';
 import DeleteUrlForm from '@/Pages/Urls/partials/DeleteUrlForm';
 import ShowQR from '@/Pages/Urls/partials/ShowQR';
@@ -39,38 +39,44 @@ const UrlCard = ({ urlData }) => {
                     </div>
                     <div className="flex gap-1">
                         <span className="text-xs text-gray-200 bg-black px-2 py-1 rounded-full">{created_at_f}</span> {/*created_at_f    -     Expire 30 min.*/}
-                        {is_build_utm ? <span className="text-xs bg-green-900 text-white font-bold py-1 px-2 rounded-md">utm</span>:null}
-                        {!!password ? <span className="text-xs bg-yellow-500 text-white font-bold py-1 px-2 rounded-md"><FontAwesomeIcon icon={faKey} /></span>:null}
+                        {is_build_utm ? <span className="text-xs bg-green-900 text-white font-bold py-1 px-2 rounded-md">utm</span> : null}
+                        {!!password ? <span className="text-xs bg-yellow-500 text-white font-bold py-1 px-2 rounded-md"><FontAwesomeIcon icon={faKey} /></span> : null}
                     </div>
                 </div>
-                
+
                 <div>
                     <div className="flex gap-2">
-                    <Transition
-                        show={showMessage}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
-                    >
-                        <p className="text-sm text-gray-600">Copy</p>
-                    </Transition>
+                        <Transition
+                            show={showMessage}
+                            enter="transition ease-in-out"
+                            enterFrom="opacity-0"
+                            leave="transition ease-in-out"
+                            leaveTo="opacity-0"
+                        >
+                            <p className="text-sm text-gray-600">Copy</p>
+                        </Transition>
                         <div className="h-8 w-8 bg-gray-300 rounded-full flex justify-center items-center">
-                            <button onClick={handleCopy} className="relative group h-full w-full rounded-full transition-all duration-75 border border-gray-200 bg-gray-50 hover:bg-yellow-100 hover:border-yellow-200">
+                            <Link title="CLone Url" href={route('urls.clone', id)} className="flex justify-center items-center relative group h-full w-full rounded-full transition-all duration-75 border border-gray-200 bg-gray-50 hover:bg-yellow-100 hover:border-yellow-200">
+                                <span className="sr-only">Clone</span>
+                                <FontAwesomeIcon icon={faSave} />
+                            </Link>
+                        </div>
+                        <div className="h-8 w-8 bg-gray-300 rounded-full flex justify-center items-center">
+                            <button title="Copy Url" onClick={handleCopy} className="relative group h-full w-full rounded-full transition-all duration-75 border border-gray-200 bg-gray-50 hover:bg-yellow-100 hover:border-yellow-200">
                                 <span className="sr-only">Copy</span>
                                 <FontAwesomeIcon icon={faCopy} />
                             </button>
                         </div>
-                        <ShowQR shortened_url={shortened_url}/>
-                        { user === null ? null:(
-                            <>                       
-                            <div className="h-8 w-8 bg-gray-300 rounded-full flex justify-center items-center">
-                                <Link title="Edit Url" href={route('urls.edit', id)} className="flex justify-center items-center relative group h-full w-full rounded-full transition-all duration-75 border border-gray-200 bg-gray-50 hover:bg-yellow-100 hover:border-yellow-200">
-                                    <span className="sr-only">Edit</span>
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </Link>
-                            </div>
-                            <DeleteUrlForm id={id}/>
+                        <ShowQR shortened_url={shortened_url} />
+                        {user === null ? null : (
+                            <>
+                                <div className="h-8 w-8 bg-gray-300 rounded-full flex justify-center items-center">
+                                    <Link title="Edit Url" href={route('urls.edit', id)} className="flex justify-center items-center relative group h-full w-full rounded-full transition-all duration-75 border border-gray-200 bg-gray-50 hover:bg-yellow-100 hover:border-yellow-200">
+                                        <span className="sr-only">Edit</span>
+                                        <FontAwesomeIcon icon={faEdit} />
+                                    </Link>
+                                </div>
+                                <DeleteUrlForm id={id} />
                             </>
                         )}
                     </div>
