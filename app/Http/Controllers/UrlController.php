@@ -82,6 +82,16 @@ class UrlController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Url $url)
+    {
+        return Inertia::render('Urls/Show', [
+            'url' => $url
+        ]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Url $url)

@@ -15,9 +15,9 @@ export default function Index({ auth, urls }) {
         >
             <Head title="Urls" />
 
-            <div className="py-12 bg-gray-100">
+            <div className="py-1 bg-gray-100">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-lg sm:rounded-lg p-6">
+                    <div className=" sm:rounded-lg p-6">
                         <div className="w-full flex justify-end items-center mb-4">
                             <Link href={route('urls.create')}>
                                 <PrimaryButton className="flex items-center space-x-2">
