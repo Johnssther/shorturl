@@ -10,6 +10,9 @@ use DB, Log;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
 
+use App\Mail\CreateUrlEmail;
+use Illuminate\Support\Facades\Mail;
+
 class UrlController extends Controller
 {
     /**
@@ -74,6 +77,10 @@ class UrlController extends Controller
             $url->save();
 
             DB::commit();
+
+            $url = env('APP_URL') . 'i/' . $url->shortened_url;
+            Mail::to('johnssther@gmail.com')->send(new CreateUrlEmail($url, $request->user()));    
+
             return redirect(route('urls.index'));
         } catch (\Exception $e) {
             DB::rollBack();
