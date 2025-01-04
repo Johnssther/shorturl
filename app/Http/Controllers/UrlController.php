@@ -9,12 +9,19 @@ use Illuminate\Http\RedirectResponse;
 use DB, Log;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
-
+use App\Class\MessageSlack;
 use App\Mail\CreateUrlEmail;
 use Illuminate\Support\Facades\Mail;
 
 class UrlController extends Controller
 {
+    protected $slack;
+
+    public function __construct(MessageSlack $slack)
+    {
+        $this->slack = $slack;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -78,12 +85,18 @@ class UrlController extends Controller
 
             DB::commit();
 
+            // Send Email
             $url = env('APP_URL') . 'i/' . $url->shortened_url;
-            Mail::to('johnssther@gmail.com')->send(new CreateUrlEmail($url, $request->user()));    
+            // Mail::to($request->user()->email)->send(new CreateUrlEmail($url, $request->user()));
+            Mail::to($request->user()->email)->queue(new CreateUrlEmail($url, $request->user()));
+
+            $mensaje = "Se ha creado una nueva url por el usuario: " . $request->user()->name;
+            $this->slack->sendMessageSlack($mensaje);
 
             return redirect(route('urls.index'));
         } catch (\Exception $e) {
             DB::rollBack();
+            dd( $e->getMessage() );
             Log::error("Error store role {$e->getMessage()}");
         }
     }
@@ -134,6 +147,8 @@ class UrlController extends Controller
             $url->save();
 
             DB::commit();
+            $mensaje = "Se ha editado la url: " . $url->shortened_url;
+            $this->slack->sendMessageSlack($mensaje);
             return redirect(route('urls.index'));
         } catch (\Exception $e) {
             DB::rollBack();
@@ -148,6 +163,8 @@ class UrlController extends Controller
         ]);
 
         $url->delete();
+        $mensaje = "Se ha eliminado la url: " . $url->shortened_url;
+        $this->slack->sendMessageSlack($mensaje);
         return redirect(route('urls.index'));
     }
 
@@ -157,6 +174,10 @@ class UrlController extends Controller
         $clonedUrl = $url->replicate();
         $clonedUrl->shortened_url = Str::random(6);
         $clonedUrl->save();
+
+        $mensaje = "Se ha clonado la url: " . $url->shortened_url;
+        $this->slack->sendMessageSlack($mensaje);
+        
         return redirect()->route('urls.edit', $clonedUrl->id);
     }
 
